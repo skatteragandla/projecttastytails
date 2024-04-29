@@ -23,8 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.tastytails"
-    compileSdk flutter.compileSdkVersion
+    namespace "com.example.assignmentproject"
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -65,3 +65,10 @@ flutter {
 }
 
 dependencies {}
+
+
+
+
+
+
+
