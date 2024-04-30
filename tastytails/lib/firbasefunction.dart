@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:tastytails/firebase_options.dart';
 
 class FirestoreServices {
-  static saveUser(String name, email, uid) async {
+  static Future<void> saveUser(String name, String email, String uid) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)

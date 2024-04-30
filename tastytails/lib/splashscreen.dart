@@ -22,10 +22,10 @@ class SplashScreen extends StatelessWidget {
             Text(
               'TASTY TRAILS',
               style: TextStyle(
-                fontFamily: 'Lobster',
+                fontFamily: 'Varela',
                 fontSize: 57,
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Color.fromARGB(255, 238, 6, 6),
               ),
             ),
             SizedBox(height: 30),

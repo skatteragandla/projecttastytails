@@ -1,26 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:tastytails/sidebarsettings.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  User? user = FirebaseAuth.instance.currentUser;
-  File? _image; // Variable to hold the image file
+  final ImagePicker _picker = ImagePicker();
+  File? _image;
 
-  // Function to handle picking an image
   Future<void> _pickImage() async {
-    final ImagePicker _picker = ImagePicker();
-    // Pick an image
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-
     if (image != null) {
       setState(() {
         _image = File(image.path);
@@ -32,37 +28,40 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Home'),
         actions: [
           IconButton(
+            icon: Icon(Icons.logout),
             onPressed: () async {
               await FirebaseAuth.instance.signOut();
             },
-            icon: Icon(Icons.logout),
           ),
         ],
-        title: Text('Home'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            UserAccountsDrawerHeader(
-              accountName: Text(user?.displayName ?? "No Name"),
-              accountEmail: Text(user?.email ?? "no-email@example.com"),
-              currentAccountPicture: GestureDetector(
-                onTap: _pickImage,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  backgroundImage: _image != null ? FileImage(_image!) : null,
-                  child: _image == null
-                      ? Text(
-                          user?.displayName?.substring(0, 1).toUpperCase() ??
-                              "NN",
-                          style: TextStyle(fontSize: 40.0),
-                        )
-                      : null,
-                ),
-              ),
+            StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.userChanges(),
+              builder: (context, snapshot) {
+                var user = snapshot.data;
+                return UserAccountsDrawerHeader(
+                  accountName: Text(user?.displayName ?? "Set Name"),
+                  accountEmail: Text(user?.email ?? "Set Email"),
+                  currentAccountPicture: GestureDetector(
+                    onTap: _pickImage,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.grey.shade800,
+                      backgroundImage:
+                          _image != null ? FileImage(_image!) : null,
+                      child: _image == null
+                          ? Icon(Icons.person, size: 40.0)
+                          : null,
+                    ),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: Icon(Icons.home),
@@ -76,6 +75,10 @@ class _HomeState extends State<Home> {
               title: Text('Settings'),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                );
               },
             ),
             ListTile(

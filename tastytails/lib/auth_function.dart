@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tastytails/firbasefunction.dart'; // Ensure the correct spelling if this import is used.
+import 'package:tastytails/firbasefunction.dart';
 
 class AuthServices {
   static signupUser(
