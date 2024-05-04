@@ -13,7 +13,7 @@ class AuthServices {
       await FirebaseAuth.instance.currentUser!.updateEmail(email);
       await FirestoreServices.saveUser(name, email, userCredential.user!.uid);
 
-      // Notify the user about successful registration
+      
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Registration Successful')));

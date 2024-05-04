@@ -68,6 +68,30 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/splashscreen.jpeg
+    - assets/biryani.jpeg
+    - assets/pizza.jpeg
+    - assets/burger.jpeg
+    - assets/tea.jpeg
+    - assets/coffee.jpg
+    - assets/frenchfries.jpg
+    - assets/poori.jpg
+    - assets/appricotdelight.jpg
+    - assets/gulabjammon.jpeg
+    - assets/buttermilk.jpg
+    - assets/lemonsoda.jpg
+    - assets/pepsi.png
+    - assets/sprite.png
+    - assets/coke.jpg
+    - assets/eggfriedrice.jpg
+    - assets/ChickenNoodles.jpg
+    - assets/lemonrice.jpg
+    - assets/masaladosa.jpg
+    - assets/qdilla.jpg
+    - assets/tacos.jpg
+    - assets/burrito.jpg
+    - assets/ChickenNuggets.jpg
+    
+
 
   fonts:
     - family: Bebas

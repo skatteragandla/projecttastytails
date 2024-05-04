@@ -1,8 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:tastytails/sidebarsettings.dart';
+import 'package:tastytails/food_menu.dart'; 
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final ImagePicker _picker = ImagePicker();
   File? _image;
+  String? _searchValue;
 
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
@@ -88,6 +90,56 @@ class _HomeState extends State<Home> {
                 Navigator.pop(context);
                 await FirebaseAuth.instance.signOut();
               },
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Enter your ZIP CODE',
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _searchValue = value;
+                });
+              },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                if (_searchValue != null && _searchValue!.isNotEmpty) {
+                  if (_searchValue == '95926' || _searchValue == '95928') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FoodMenuPage()),
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Invalid ZIP CODE'),
+                          content: Text('Please enter a valid ZIP CODE.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context); 
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                }
+              },
+              child: Text('Search'),
             ),
           ],
         ),
