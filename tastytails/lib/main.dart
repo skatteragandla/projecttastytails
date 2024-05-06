@@ -1,84 +1,58 @@
-import 'dart:async';
+// main.dart
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tastytails/home.dart';
+import 'package:tastytails/authentication/login.dart';
+import 'package:tastytails/firebase_options.dart';
+import 'package:tastytails/splashscreen.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tasty Trials',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: SplashScreen(),
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class SplashScreen extends StatefulWidget {
-  @override
-  _SplashScreenState createState() => _SplashScreenState();
-}
+class _MyAppState extends State<MyApp> {
+  bool _isInitialized = false;
 
-class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Navigate to home screen after 3 seconds
-    Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        _isInitialized = true;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.deepPurple, // Set your desired background color
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/splashscreen.jpeg',
-              width: 200,
-              height: 200,
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Welcome to Tasty Trials',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Tasty Trials'),
-      ),
-      body: Center(
-        child: Text(
-          'Welcome to Tasty Trials Home Screen!',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+    return MaterialApp(
+      home: _isInitialized
+          ? StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.hasData) {
+                    return Home();
+                  } else {
+                    return LoginForm();
+                  }
+                }
+                return Scaffold(
+                  body: Center(child: CircularProgressIndicator()),
+                );
+              },
+            )
+          : const SplashScreen(),
     );
   }
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "894196195572",
+    "project_id": "tastytrailsproject",
+    "storage_bucket": "tastytrailsproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894196195572:android:3ccc8709fdc2c4d47afea1",
+        "android_client_info": {
+          "package_name": "com.example.tastytails"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn60F0ANIsr7mfIZRtZf9uvqwW_7ODXTA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
