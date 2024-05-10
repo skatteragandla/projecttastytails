@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        backgroundColor: Colors.red, // Customizing app bar color
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -39,6 +39,9 @@ class _HomeState extends State<Home> {
             },
           ),
         ],
+        title: Center(
+          child: Text('Home'), // Centering the text "Home"
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -55,13 +58,23 @@ class _HomeState extends State<Home> {
                     onTap: _pickImage,
                     child: CircleAvatar(
                       backgroundColor: Colors.grey.shade800,
-                      backgroundImage:
-                          _image != null ? FileImage(_image!) : null,
-                      child: _image == null
-                          ? Icon(Icons.person, size: 40.0)
-                          : null,
+                      backgroundImage: _image != null ? FileImage(_image!) : null,
+                      child: _image == null ? Icon(Icons.person, size: 40.0) : null,
                     ),
                   ),
+                  // Adding more user details if available
+                  otherAccountsPictures: [
+                    IconButton(
+                      icon: Icon(Icons.settings),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SettingsPage()),
+                        );
+                      },
+                    ),
+                  ],
                 );
               },
             ),
@@ -102,6 +115,11 @@ class _HomeState extends State<Home> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your ZIP CODE',
+                border: OutlineInputBorder( // Adding border styling
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), // Adding padding
               ),
               onChanged: (value) {
                 setState(() {
@@ -139,7 +157,15 @@ class _HomeState extends State<Home> {
                   }
                 }
               },
-              child: Text('Search'),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0), // Adding padding to button
+                child: Text('Search', style: TextStyle(fontSize: 18.0)), // Adding text style
+              ),
+              style: ElevatedButton.styleFrom(
+                // Customizing button color
+                shadowColor: Colors.red,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), // Adding border radius
+              ),
             ),
           ],
         ),

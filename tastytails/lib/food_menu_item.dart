@@ -1,11 +1,8 @@
-// food_menu_item.dart
-
 import 'package:flutter/material.dart';
-import 'package:tastytails/cartpage.dart';
 
 class FoodMenuItem extends StatelessWidget {
   final String name;
-  final String price;
+  final double price; // Updated to double
   final String image;
   final Function(FoodMenuItem) addToCart;
 
@@ -20,24 +17,34 @@ class FoodMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      elevation: 4, // Add elevation for a distinct appearance
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10), // Add rounded corners
+      ),
       margin: EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
-        leading: Image.asset(
-          image,
-          width: 80,
-          height: 80,
-          fit: BoxFit.cover,
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8), // Add rounded corners to image
+          child: Image.asset(
+            image,
+            width: 45,
+            height: 45,
+            fit: BoxFit.cover,
+          ),
         ),
         title: Text(name),
         subtitle: Row(
           children: [
-            Text('Price: $price'),
-            Spacer(), 
+            Text('Price: \$${price.toStringAsFixed(2)}'), // Format price as a string
+            Spacer(),
             ElevatedButton(
-              onPressed: () {
-                addToCart(this);
-              },
+              onPressed: () => addToCart(this),
               child: Text('Add to Cart'),
+              style: ElevatedButton.styleFrom(
+                // Add visual feedback to the button
+                elevation: 2,
+                backgroundColor: Colors.red, // Change button color
+              ),
             ),
           ],
         ),
