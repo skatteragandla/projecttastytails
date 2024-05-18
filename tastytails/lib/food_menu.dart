@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:tastytails/cartpage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'cartpage.dart';
 
 class FoodMenuPage extends StatefulWidget {
   const FoodMenuPage({Key? key}) : super(key: key);
 
   @override
-  _FoodMenuPageState createState() => _FoodMenuPageState();
+  State<FoodMenuPage> createState() => _FoodMenuPageState();
 }
 
 class _FoodMenuPageState extends State<FoodMenuPage> {
@@ -21,10 +22,10 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Food Menu'),
+        title: const Text('Food Menu'),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () {
               Navigator.push(
                 context,
@@ -36,157 +37,34 @@ class _FoodMenuPageState extends State<FoodMenuPage> {
           ),
         ],
       ),
-      body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
-          FoodMenuItem(
-            name: 'Biryani',
-            price: '\$25',
-            image: 'assets/biryani.jpeg',
-            addToCart: addToCart,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, 
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+            childAspectRatio: 0.75,
           ),
-          FoodMenuItem(
-            name: 'Pizza',
-            price: '\$15',
-            image: 'assets/pizza.jpeg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Burger',
-            price: '\$10',
-            image: 'assets/burger.jpeg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Tea',
-            price: '\$5',
-            image: 'assets/tea.jpeg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Coffee',
-            price: '\$7',
-            image: 'assets/coffee.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'French Fries',
-            price: '\$4',
-            image: 'assets/frenchfries.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Burrito',
-            price: '\$10',
-            image: 'assets/burrito.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Taco\'s',
-            price: '\$5',
-            image: 'assets/tacos.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Chicken Nuggets',
-            price: '\$8',
-            image: 'assets/ChickenNuggets.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Quesadilla',
-            price: '\$8',
-            image: 'assets/qdilla.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Masala Dosa',
-            price: '\$6',
-            image: 'assets/masaladosa.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Poori',
-            price: '\$7',
-            image: 'assets/poori.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Lemon Rice',
-            price: '\$9',
-            image: 'assets/lemonrice.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Chicken Noodles',
-            price: '\$10',
-            image: 'assets/ChickenNoodles.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Egg Fried Rice',
-            price: '\$15',
-            image: 'assets/eggfriedrice.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Coke',
-            price: '\$3',
-            image: 'assets/coke.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Pepsi',
-            price: '\$2.8',
-            image: 'assets/pepsi.png',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Sprite',
-            price: '\$3',
-            image: 'assets/sprite.png',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Lemon Soda',
-            price: '\$5',
-            image: 'assets/lemonsoda.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Buttermilk',
-            price: '\$3',
-            image: 'assets/buttermilk.jpg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Gulab Jamun',
-            price: '\$5',
-            image: 'assets/gulabjammon.jpeg',
-            addToCart: addToCart,
-          ),
-          FoodMenuItem(
-            name: 'Apricot Delight',
-            price: '\$8',
-            image: 'assets/appricotdelight.jpg',
-            addToCart: addToCart,
-          ),
-        ],
+          itemCount: foodItems.length,
+          itemBuilder: (context, index) {
+            return FoodMenuItemCard(
+              foodItem: foodItems[index],
+              addToCart: addToCart,
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-class FoodMenuItem extends StatelessWidget {
-  final String name;
-  final String price;
-  final String image;
+class FoodMenuItemCard extends StatelessWidget {
+  final FoodMenuItem foodItem;
   final Function(FoodMenuItem) addToCart;
 
-  const FoodMenuItem({
-    required this.name,
-    required this.price,
-    required this.image,
+  const FoodMenuItemCard({
+    required this.foodItem,
     required this.addToCart,
     Key? key,
   }) : super(key: key);
@@ -194,26 +72,193 @@ class FoodMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      child: ListTile(
-        leading: Image.asset(
-          image,
-          width: 80,
-          height: 80,
-          fit: BoxFit.cover,
-        ),
-        title: Text(name),
-        subtitle: Row(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: InkWell(
+        onTap: () {
+          // Handle item tap if needed
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('Price: $price'),
-            Spacer(), 
-            ElevatedButton(
-              onPressed: () => addToCart(this),
-              child: Text('Add to Cart'),
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+                child: Image.asset(
+                  foodItem.image,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    foodItem.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '\$${foodItem.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ElevatedButton.icon(
+                onPressed: () => addToCart(foodItem),
+                icon: const FaIcon(FontAwesomeIcons.cartPlus, size: 18),
+                label: const Text('Add to Cart'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange, // Background color
+                  shadowColor: Colors.white, // Text color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
     );
   }
 }
+
+class FoodMenuItem {
+  final String name;
+  final double price;
+  final String image;
+
+  const FoodMenuItem({
+    required this.name,
+    required this.price,
+    required this.image,
+  });
+}
+
+final List<FoodMenuItem> foodItems = [
+  FoodMenuItem(
+    name: 'Biryani',
+    price: 25,
+    image: 'assets/biryani.jpeg',
+  ),
+  FoodMenuItem(
+    name: 'Pizza',
+    price: 15,
+    image: 'assets/pizza.jpeg',
+  ),
+  FoodMenuItem(
+    name: 'Burger',
+    price: 10,
+    image: 'assets/burger.jpeg',
+  ),
+  FoodMenuItem(
+    name: 'Tea',
+    price: 5,
+    image: 'assets/tea.jpeg',
+  ),
+  FoodMenuItem(
+    name: 'Coffee',
+    price: 7,
+    image: 'assets/coffee.jpg',
+  ),
+  FoodMenuItem(
+    name: 'French Fries',
+    price: 4,
+    image: 'assets/frenchfries.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Burrito',
+    price: 10,
+    image: 'assets/burrito.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Taco\'s',
+    price: 5,
+    image: 'assets/tacos.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Chicken Nuggets',
+    price: 8,
+    image: 'assets/ChickenNuggets.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Quesadilla',
+    price: 8,
+    image: 'assets/qdilla.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Masala Dosa',
+    price: 6,
+    image: 'assets/masaladosa.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Poori',
+    price: 7,
+    image: 'assets/poori.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Lemon Rice',
+    price: 9,
+    image: 'assets/lemonrice.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Chicken Noodles',
+    price: 10,
+    image: 'assets/ChickenNoodles.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Egg Fried Rice',
+    price: 15,
+    image: 'assets/eggfriedrice.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Coke',
+    price: 3,
+    image: 'assets/coke.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Pepsi',
+    price: 2.8,
+    image: 'assets/pepsi.png',
+  ),
+  FoodMenuItem(
+    name: 'Sprite',
+    price: 3,
+    image: 'assets/sprite.png',
+  ),
+  FoodMenuItem(
+    name: 'Lemon Soda',
+    price: 5,
+    image: 'assets/lemonsoda.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Buttermilk',
+    price: 3,
+    image: 'assets/buttermilk.jpg',
+  ),
+  FoodMenuItem(
+    name: 'Gulab Jamun',
+    price: 5,
+    image: 'assets/gulabjammon.jpeg',
+  ),
+  FoodMenuItem(
+    name: 'Apricot Delight',
+    price: 8,
+    image: 'assets/appricotdelight.jpg',
+  ),
+];

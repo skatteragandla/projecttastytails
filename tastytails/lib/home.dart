@@ -1,3 +1,4 @@
+//home.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,7 +31,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        backgroundColor: Colors.red, 
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -39,6 +40,9 @@ class _HomeState extends State<Home> {
             },
           ),
         ],
+        title: Center(
+          child: Text('TASTY TRAILS '), 
+        ),
       ),
       drawer: Drawer(
         child: ListView(
@@ -55,13 +59,23 @@ class _HomeState extends State<Home> {
                     onTap: _pickImage,
                     child: CircleAvatar(
                       backgroundColor: Colors.grey.shade800,
-                      backgroundImage:
-                          _image != null ? FileImage(_image!) : null,
-                      child: _image == null
-                          ? Icon(Icons.person, size: 40.0)
-                          : null,
+                      backgroundImage: _image != null ? FileImage(_image!) : null,
+                      child: _image == null ? Icon(Icons.person, size: 40.0) : null,
                     ),
                   ),
+                  
+                  otherAccountsPictures: [
+                    IconButton(
+                      icon: Icon(Icons.settings),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SettingsPage()),
+                        );
+                      },
+                    ),
+                  ],
                 );
               },
             ),
@@ -102,6 +116,11 @@ class _HomeState extends State<Home> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your ZIP CODE',
+                border: OutlineInputBorder( 
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), 
               ),
               onChanged: (value) {
                 setState(() {
@@ -139,7 +158,15 @@ class _HomeState extends State<Home> {
                   }
                 }
               },
-              child: Text('Search'),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.0), 
+                child: Text('Search', style: TextStyle(fontSize: 18.0)), 
+              ),
+              style: ElevatedButton.styleFrom(
+                
+                shadowColor: Colors.red,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), 
+              ),
             ),
           ],
         ),

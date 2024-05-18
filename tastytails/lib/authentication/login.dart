@@ -1,3 +1,4 @@
+//login.dart
 import 'package:flutter/material.dart';
 import 'package:tastytails/auth_function.dart';
 import 'package:tastytails/firebase_options.dart';
@@ -23,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
       appBar: AppBar(
         elevation: 0,
         title: Text(login ? 'Login' : 'Register'),
-        backgroundColor: Colors.red, // Setting the background color to red
+        backgroundColor: Colors.red, 
       ),
       body: SingleChildScrollView(
         child: Padding(
