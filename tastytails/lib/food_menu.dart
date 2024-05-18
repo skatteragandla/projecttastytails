@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:tastytails/cartpage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'cartpage.dart';
 
-class FoodMenuPage extends StatelessWidget {
+class FoodMenuPage extends StatefulWidget {
   const FoodMenuPage({Key? key}) : super(key: key);
+
+  @override
+  State<FoodMenuPage> createState() => _FoodMenuPageState();
+}
+
+class _FoodMenuPageState extends State<FoodMenuPage> {
+  List<FoodMenuItem> selectedItems = [];
+
+  void addToCart(FoodMenuItem item) {
+    setState(() {
+      selectedItems.add(item);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Food Menu'),
+        title: const Text('Food Menu'),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: const Icon(Icons.shopping_cart),
             onPressed: () {
               Navigator.push(
                 context,
@@ -23,20 +37,23 @@ class FoodMenuPage extends StatelessWidget {
           ),
         ],
       ),
-      body: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // Two items per row
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, 
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+            childAspectRatio: 0.75,
+          ),
+          itemCount: foodItems.length,
+          itemBuilder: (context, index) {
+            return FoodMenuItemCard(
+              foodItem: foodItems[index],
+              addToCart: addToCart,
+            );
+          },
         ),
-        padding: EdgeInsets.all(8.0),
-        itemCount: foodItems.length,
-        itemBuilder: (context, index) {
-          return FoodMenuItemCard(
-            foodItem: foodItems[index],
-            addToCart: addToCart,
-          );
-        },
       ),
     );
   }
@@ -57,18 +74,18 @@ class FoodMenuItemCard extends StatelessWidget {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
       ),
       child: InkWell(
         onTap: () {
-          // Handle item tap
+          // Handle item tap if needed
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
                 child: Image.asset(
                   foodItem.image,
                   fit: BoxFit.cover,
@@ -82,20 +99,38 @@ class FoodMenuItemCard extends StatelessWidget {
                 children: [
                   Text(
                     foodItem.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
-                  SizedBox(height: 2),
+                  const SizedBox(height: 4),
                   Text(
                     '\$${foodItem.price.toStringAsFixed(2)}',
-                    style: TextStyle(color: Colors.grey),
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
                   ),
                 ],
               ),
             ),
-            ElevatedButton(
-              onPressed: () => addToCart(foodItem),
-              child: Text('Add to Cart'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ElevatedButton.icon(
+                onPressed: () => addToCart(foodItem),
+                icon: const FaIcon(FontAwesomeIcons.cartPlus, size: 18),
+                label: const Text('Add to Cart'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange, // Background color
+                  shadowColor: Colors.white, // Text color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
             ),
+            const SizedBox(height: 8),
           ],
         ),
       ),
@@ -227,9 +262,3 @@ final List<FoodMenuItem> foodItems = [
     image: 'assets/appricotdelight.jpg',
   ),
 ];
-
-List<FoodMenuItem> selectedItems = [];
-
-void addToCart(FoodMenuItem item) {
-  selectedItems.add(item);
-}

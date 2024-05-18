@@ -24,7 +24,7 @@ class _LoginFormState extends State<LoginForm> {
       appBar: AppBar(
         elevation: 0,
         title: Text(login ? 'Login' : 'Register'),
-        backgroundColor: Colors.red, // Setting the background color to red
+        backgroundColor: Colors.red, 
       ),
       body: SingleChildScrollView(
         child: Padding(

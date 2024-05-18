@@ -1,8 +1,9 @@
+//food_menu_item.dart
 import 'package:flutter/material.dart';
 
 class FoodMenuItem extends StatelessWidget {
   final String name;
-  final double price; // Updated to double
+  final double price; 
   final String image;
   final Function(FoodMenuItem) addToCart;
 
@@ -17,14 +18,14 @@ class FoodMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4, // Add elevation for a distinct appearance
+      elevation: 4, 
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10), // Add rounded corners
+        borderRadius: BorderRadius.circular(10), 
       ),
       margin: EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
         leading: ClipRRect(
-          borderRadius: BorderRadius.circular(8), // Add rounded corners to image
+          borderRadius: BorderRadius.circular(8), 
           child: Image.asset(
             image,
             width: 45,
@@ -35,15 +36,15 @@ class FoodMenuItem extends StatelessWidget {
         title: Text(name),
         subtitle: Row(
           children: [
-            Text('Price: \$${price.toStringAsFixed(2)}'), // Format price as a string
+            Text('Price: \$${price.toStringAsFixed(2)}'), 
             Spacer(),
             ElevatedButton(
               onPressed: () => addToCart(this),
               child: Text('Add to Cart'),
               style: ElevatedButton.styleFrom(
-                // Add visual feedback to the button
+                
                 elevation: 2,
-                backgroundColor: Colors.red, // Change button color
+                backgroundColor: Colors.red, 
               ),
             ),
           ],

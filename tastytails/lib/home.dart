@@ -1,3 +1,4 @@
+//home.dart
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,7 +31,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red, // Customizing app bar color
+        backgroundColor: Colors.red, 
         actions: [
           IconButton(
             icon: Icon(Icons.logout),
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
           ),
         ],
         title: Center(
-          child: Text('Home'), // Centering the text "Home"
+          child: Text('TASTY TRAILS '), 
         ),
       ),
       drawer: Drawer(
@@ -62,7 +63,7 @@ class _HomeState extends State<Home> {
                       child: _image == null ? Icon(Icons.person, size: 40.0) : null,
                     ),
                   ),
-                  // Adding more user details if available
+                  
                   otherAccountsPictures: [
                     IconButton(
                       icon: Icon(Icons.settings),
@@ -115,11 +116,11 @@ class _HomeState extends State<Home> {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter your ZIP CODE',
-                border: OutlineInputBorder( // Adding border styling
+                border: OutlineInputBorder( 
                   borderRadius: BorderRadius.circular(10.0),
                   borderSide: BorderSide(color: Colors.red),
                 ),
-                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), // Adding padding
+                contentPadding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0), 
               ),
               onChanged: (value) {
                 setState(() {
@@ -158,13 +159,13 @@ class _HomeState extends State<Home> {
                 }
               },
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.0), // Adding padding to button
-                child: Text('Search', style: TextStyle(fontSize: 18.0)), // Adding text style
+                padding: EdgeInsets.symmetric(vertical: 12.0), 
+                child: Text('Search', style: TextStyle(fontSize: 18.0)), 
               ),
               style: ElevatedButton.styleFrom(
-                // Customizing button color
+                
                 shadowColor: Colors.red,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), // Adding border radius
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)), 
               ),
             ),
           ],

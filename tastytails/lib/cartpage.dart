@@ -1,3 +1,4 @@
+//cartpage.dart
 import 'package:flutter/material.dart';
 import 'package:tastytails/checkoutpage.dart';
 import 'package:tastytails/food_menu.dart';
@@ -17,7 +18,6 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
-    // Initialize the itemQuantityMap with the initial quantities of items in the cart
     for (var item in widget.cartItems) {
       if (itemQuantityMap.containsKey(item)) {
         itemQuantityMap[item] = itemQuantityMap[item]! + 1;
@@ -115,7 +115,7 @@ class _CartPageState extends State<CartPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => checkoutPg(),
+                              builder: (context) => CheckoutPage(),
                             ),
                           );
                         },
